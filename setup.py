@@ -32,6 +32,7 @@ setup(
     zip_safe=False,
     install_requires=[
         "chimedb @ git+https://github.com/chime-experiment/chimedb.git",
+        "comet @ git+https://github.com/chime-experiment/comet.git",
         "peewee >= 3.10",
         "future",
     ],

@@ -12,7 +12,7 @@ from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
 
 import datetime
 
-from chimedb.core.util import TIMESTAMP_FORMAT
+from comet.manager import TIMESTAMP_FORMAT
 from .orm import (
     DatasetStateType,
     DatasetCurrentState,

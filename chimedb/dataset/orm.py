@@ -6,7 +6,7 @@ from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
 
 # === End Python 2/3 compatibility
 
-from chimedb.core.orm import base_model, LongJSONDictField
+from chimedb.core.orm import base_model, JSONDictField
 
 import orjson as json
 import peewee

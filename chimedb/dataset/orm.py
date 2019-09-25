@@ -35,7 +35,7 @@ class DatasetState(base_model):
 
     id = peewee.DecimalField(21, 0, primary_key=True)
     type = peewee.ForeignKeyField(DatasetStateType, null=True)
-    data = LongJSONDictField()
+    data = JSONDictField()
 
 
 class Dataset(base_model):

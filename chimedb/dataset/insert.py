@@ -13,13 +13,7 @@ from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
 import datetime
 
 from comet.manager import TIMESTAMP_FORMAT
-from .orm import (
-    DatasetStateType,
-    DatasetCurrentState,
-    DatasetState,
-    Dataset,
-    DatasetAttachedType,
-)
+from .orm import DatasetStateType, DatasetCurrentState, DatasetState, Dataset
 
 # Logging
 # =======
@@ -73,7 +67,7 @@ def insert_dataset(entry):
     Parameters
     ----------
     entry : dict
-        A dict containing the fields `ds/state`, `ds/is_root`, `ds/types`, `time`, `hash`.
+        A dict containing the fields `ds/state`, `ds/is_root`, `ds/type`, `time`, `hash`.
     """
     state = DatasetState.get(DatasetState.id == entry["ds"]["state"])
     try:
@@ -86,6 +80,4 @@ def insert_dataset(entry):
             time=datetime.datetime.strptime(entry["time"], TIMESTAMP_FORMAT),
         )
 
-    for state_type in entry["ds"]["types"]:
-        state_type_id, _ = DatasetStateType.get_or_create(name=state_type)
-        DatasetAttachedType.get_or_create(dataset_id=dataset, type=state_type_id)
+    state_type_id, _ = DatasetStateType.get_or_create(name=entry["ds"]["type"])

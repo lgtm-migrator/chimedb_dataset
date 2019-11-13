@@ -7,7 +7,6 @@ dataset and state tables used by `comet` to track metadata.
 
 The table classes provided in `chimedb.dataset` are:
 * Dataset
-* DatasetAttachedType
 * DatasetCurrentState
 * DatasetState
 * DatasetStateType

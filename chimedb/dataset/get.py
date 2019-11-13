@@ -10,7 +10,7 @@ from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
 # Imports
 # =======
 
-from .orm import Dataset, DatasetState, DatasetAttachedType
+from .orm import Dataset, DatasetState
 
 # Logging
 # =======
@@ -60,32 +60,3 @@ def get_state(id):
     except DatasetState.DoesNotExist:
         _logger.warning("Could not find state {}.".format(id))
         return None
-
-
-def get_types(dataset_id):
-    """
-    Get state types of the given dataset.
-
-    Parameters
-    ----------
-    dataset_id : int
-        ID of the dataset to find attached state types for.
-
-    Returns
-    -------
-    list of str
-        The state types attached to the dataset. Returns `None` if dataset or types not found.
-    """
-    try:
-        result = DatasetAttachedType.select().where(
-            DatasetAttachedType.dataset_id == dataset_id
-        )
-    except DatasetAttachedType.DoesNotExist:
-        _logger.warning(
-            "Could not find any types attached to dataset {}.".format(dataset_id)
-        )
-        return None
-    types = list()
-    for t in result:
-        types.append(t.type.name)
-    return types

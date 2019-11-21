@@ -11,4 +11,6 @@ The table classes provided in `chimedb.dataset` are:
 * DatasetState
 * DatasetStateType
 
-![Diagram](dm.png)
+![Database Schema](dm.png)
+
+Edit the diagram: https://www.draw.io/#Hchime-experiment%2Fchimedb_dataset%2Fmaster%2Fdm.png

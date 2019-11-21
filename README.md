@@ -10,3 +10,5 @@ The table classes provided in `chimedb.dataset` are:
 * DatasetCurrentState
 * DatasetState
 * DatasetStateType
+
+![Diagram](dm.png)

@@ -7,10 +7,9 @@ dataset and state tables used by `comet` to track metadata.
 
 The table classes provided in `chimedb.dataset` are:
 * Dataset
-* DatasetCurrentState
 * DatasetState
 * DatasetStateType
 
-![Database Schema](dm.png)
+![Database Schema](dataset.png)
 
 Edit the diagram: https://www.draw.io/#Hchime-experiment%2Fchimedb_dataset%2Fmaster%2Fdm.png

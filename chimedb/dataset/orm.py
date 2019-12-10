@@ -35,6 +35,7 @@ class DatasetState(base_model):
     id = peewee.FixedCharField(max_length=32, primary_key=True)
     type = peewee.ForeignKeyField(DatasetStateType, null=True)
     data = JSONDictField()
+    time = peewee.DateTimeField()
 
 
 class Dataset(base_model):
@@ -45,10 +46,3 @@ class Dataset(base_model):
     state = peewee.ForeignKeyField(DatasetState)
     time = peewee.DateTimeField()
     base_dset = peewee.ForeignKeyField("self", null=True)
-
-
-class DatasetCurrentState(base_model):
-    """Model for datasetcurrentstate table."""
-
-    state = peewee.ForeignKeyField(DatasetState)
-    time = peewee.DateTimeField()

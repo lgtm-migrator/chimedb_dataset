@@ -78,12 +78,12 @@ def insert_dataset(ds_id, base_dset, is_root, state, time):
     DatasetState.DoesNotExist
         If the state attached to the dataset is not found in the database.
     """
-    state = DatasetState.get(DatasetState.id == state)
     try:
         Dataset.get(Dataset.id == ds_id)
     except Dataset.DoesNotExist:
         if base_dset:
             Dataset.get(Dataset.id == base_dset)
+        state = DatasetState.select(DatasetState.id).get(DatasetState.id == state)
         Dataset.get_or_create(
             id=ds_id, state=state, root=is_root, time=time, base_dset=base_dset,
         )

@@ -28,6 +28,9 @@ class DatasetStateType(base_model):
 
     name = peewee.CharField()
 
+    def __repr__(self):
+        return "<DatasetStateType: {}>".format(self.name)
+
 
 class DatasetState(base_model):
     """Model for datasetstate table."""

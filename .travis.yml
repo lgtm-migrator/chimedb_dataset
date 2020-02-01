@@ -21,4 +21,4 @@ install:
 script:
     # Run black on all .py files in all subfolders
     - black --check .
-    - pydocstyle --convention=numpy .
+    - pydocstyle --convention=numpy --add-ignore=D105 .

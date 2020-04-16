@@ -5,9 +5,12 @@ dist: xenial
 
 python:
     - 3.6
+
 notifications:
     email: false
 
+services:
+    - mysql
 
 before_install:
     - pip install black
@@ -18,7 +21,17 @@ before_install:
 install:
     - pip install .
 
+before_script:
+    - mysql -e "CREATE DATABASE test;"
+
 script:
     # Run black on all .py files in all subfolders
     - black --check .
+
+    # check docstrings
     - pydocstyle --convention=numpy --add-ignore=D105 .
+
+    # unit tests
+    - export PYTHONPATH=.:$PYTHONPATH
+    - cd tests
+    - pytest -x

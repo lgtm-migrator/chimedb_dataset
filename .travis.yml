@@ -29,7 +29,7 @@ script:
     - black --check .
 
     # check docstrings
-    - pydocstyle --convention=numpy --add-ignore=D105 .
+    - find . ! -name versioneer.py ! -name test_*.py ! -name _version.py -name \*.py -exec pydocstyle --convention=numpy --add-ignore=D105 {} +
 
     # unit tests
     - export PYTHONPATH=.:$PYTHONPATH

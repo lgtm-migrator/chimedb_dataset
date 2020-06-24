@@ -169,7 +169,9 @@ class Dataset(orm.Dataset):
     functionality.
     """
 
+    # state type name
     _type = None
+
     _base_dataset = None
 
     @classmethod
@@ -204,9 +206,7 @@ class Dataset(orm.Dataset):
     @property
     def type(self):
         """Get the type of the attached dataset state."""
-        if self._type is None:
-            return self.dataset_state.type
-        return self._type
+        return self.dataset_state.state_type
 
     @property
     def base_dataset(self):
@@ -228,7 +228,7 @@ class Dataset(orm.Dataset):
 
     def __repr__(self):
         if self._type:
-            return "<get.Dataset[{}]: {}>".format(self.type, self.id)
+            return "<get.Dataset[{}]: {}>".format(self._type, self.id)
         else:
             return "<get.Dataset: {}>".format(self.id)
 
@@ -255,7 +255,6 @@ class Dataset(orm.Dataset):
             type_ = DatasetStateType.from_name(name=type_)
             if type_ is None:
                 raise NotFoundError("{} is not a known DatasetStateType".format(type_))
-            type_ = type_.name
         d = self
 
         while d:
@@ -264,7 +263,9 @@ class Dataset(orm.Dataset):
             d = d.base_dataset
 
         raise NotFoundError(
-            "No ancestor of type {} found for Dataset {}".format(type_, self.__repr__())
+            "No ancestor of type {} found for Dataset {}".format(
+                type_.name, self.__repr__()
+            )
         )
 
 

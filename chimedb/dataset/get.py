@@ -13,7 +13,7 @@ from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
 import warnings
 
 from . import orm
-from chimedb.core.exceptions import NotFoundError
+from chimedb.core.exceptions import NotFoundError, ValidationError
 
 # Logging
 # =======
@@ -189,6 +189,10 @@ class Dataset(orm.Dataset):
         Dataset
             The requested dataset.
         """
+        if not isinstance(ds_id, str):
+            raise ValidationError(
+                "ds_id is of type {} (expected str)".format(type(ds_id).__name__)
+            )
         if ds_id not in _dataset_cache:
             try:
                 _dataset_cache[ds_id] = Dataset.get(Dataset.id == ds_id)

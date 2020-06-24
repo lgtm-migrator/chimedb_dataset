@@ -223,7 +223,7 @@ class Dataset(orm.Dataset):
         state_id = orm_base_class.state_id
 
         if state_id not in _state_cache:
-            _state_cache[state_id] = orm_base_class.state
+            _state_cache[state_id] = DatasetState.from_id(state_id)
         return _state_cache[state_id]
 
     def __repr__(self):

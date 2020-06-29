@@ -211,8 +211,8 @@ class Dataset(orm.Dataset):
     @property
     def base_dataset(self):
         """Get the base dataset."""
-        if not self._base_dataset:
-            self._base_dataset = self.base_dset
+        if not self._base_dataset and not self.root:
+            self._base_dataset = Dataset.from_id(self.base_dset_id)
         return self._base_dataset
 
     @property

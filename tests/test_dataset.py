@@ -59,36 +59,50 @@ class TestDataset(TestChimeDB):
                 base_dset=ds_,
             )
 
-    def test_get_dataset(self):
-        ds = dget.Dataset.from_id("1337")
-        assert (
-            ds.__repr__() == "<get.Dataset: 1337>"
-            or ds.__repr__() == "<get.Dataset[twentythree]: 1337>"
-        )
-        assert ds.base_dataset is None
-        assert ds.root is True
+    def test_get_dataset_no_prefetch(self):
+        def tests():
+            ds = dget.Dataset.from_id("1337")
+            assert (
+                ds.__repr__() == "<get.Dataset: 1337>"
+                or ds.__repr__() == "<get.Dataset[twentythree]: 1337>"
+            )
+            assert ds.base_dataset is None
+            assert ds.root is True
 
-        state = dget.DatasetState.from_id("23")
-        assert state.__repr__() == "<get.DatasetState[twentythree]: 23>"
+            state = dget.DatasetState.from_id("23")
+            assert state.__repr__() == "<get.DatasetState[twentythree]: 23>"
 
-        ss = ds.closest_ancestor_of_type(type_="twentythree").state
-        assert ss.__repr__() == "<DatasetState: 23>"
-        assert ss.type.name == "twentythree"
+            ss = ds.closest_ancestor_of_type(type_="twentythree").state
+            assert ss.__repr__() == "<DatasetState: 23>"
+            assert ss.type.name == "twentythree"
 
-    def test_get_root_dataset(self):
+            assert ss.data == {"twenty": 3}
+
+        tests()
+
         # pre-fetch
         dget.index()
-        assert "1338" in dget._dataset_cache
-        assert "24" in dget._state_cache
+        tests()
 
-        ds = dget.Dataset.from_id("1338")
-        assert ds.__repr__() == "<get.Dataset[twentyfour]: 1338>"
-        assert ds.base_dataset is not None
-        assert ds.root is False
+    def test_get_root_dataset_no_prefetch(self):
+        def tests():
+            assert "1338" in dget._dataset_cache
+            assert "24" in dget._state_cache
 
-        state = dget.DatasetState.from_id("24")
-        assert state.__repr__() == "<get.DatasetState[twentyfour]: 24>"
+            ds = dget.Dataset.from_id("1338")
+            assert ds.__repr__() == "<get.Dataset[twentyfour]: 1338>"
+            assert ds.base_dataset is not None
+            assert ds.root is False
 
-        ss = ds.closest_ancestor_of_type(type_="twentyfour").state
-        assert ss.__repr__() == "<DatasetState: 24>"
-        assert ss.type.name == "twentyfour"
+            state = dget.DatasetState.from_id("24")
+            assert state.__repr__() == "<get.DatasetState[twentyfour]: 24>"
+
+            ss = ds.closest_ancestor_of_type(type_="twentyfour").state
+            assert ss.__repr__() == "<DatasetState: 24>"
+            assert ss.type.name == "twentyfour"
+
+        tests()
+
+        # pre-fetch
+        dget.index()
+        tests()

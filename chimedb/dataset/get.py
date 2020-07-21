@@ -10,6 +10,7 @@ from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
 # Imports
 # =======
 
+import collections
 import warnings
 
 from . import orm
@@ -294,6 +295,23 @@ def index():
     for t in DatasetStateType.select():
         _type_cache[t.name] = t
         _type_cache_by_id[t.id] = t
+
+
+class DatasetCache(collections.Mapping):
+    """Read-only access to the dataset cache."""
+
+    def __init__(self):
+        if not _dataset_cache:
+            index()
+
+    def __getitem__(self, key):
+        return _dataset_cache[key]
+
+    def __len__(self):
+        return len(_dataset_cache)
+
+    def __iter__(self):
+        return iter(_dataset_cache)
 
 
 def get_dataset(ds_id):

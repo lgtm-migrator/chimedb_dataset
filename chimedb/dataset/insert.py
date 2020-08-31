@@ -89,5 +89,9 @@ def insert_dataset(ds_id, base_dset, is_root, state, time):
             DatasetState.select(DatasetState.id).where(DatasetState.id == state).get()
         )
         Dataset.get_or_create(
-            id=ds_id, state=state, root=is_root, time=time, base_dset=base_dset,
+            id=ds_id,
+            state=state,
+            root=is_root,
+            time=time,
+            base_dset=base_dset,
         )

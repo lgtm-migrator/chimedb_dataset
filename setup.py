@@ -15,6 +15,7 @@ setup(
     zip_safe=False,
     install_requires=[
         "chimedb @ git+https://github.com/chime-experiment/chimedb.git",
+        "click",
         "peewee >= 3.10",
         "future",
     ],
@@ -23,4 +24,8 @@ setup(
     description="CHIME dataset (comet) ORM",
     license="GPL v3.0",
     url="https://github.com/chime-experiment/chimedb_dataset",
+    entry_points="""
+        [console_scripts]
+        dataset_utils=chimedb.dataset.utils:cli
+    """,
 )

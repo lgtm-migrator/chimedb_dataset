@@ -5,7 +5,7 @@ import click
 import numpy as np
 
 from chimedb.core import connect as connect_db, close as close_db
-from chimedb.dataset.get import Dataset, DatasetCache, index
+from chimedb.dataset.get import Dataset, DatasetCache
 
 
 @click.group()
@@ -98,9 +98,7 @@ def state_id_of_type(ds_ids: np.ndarray, state_type: str) -> np.ma.MaskedArray:
         if ds_id == nulldset:
             return nulldset
         else:
-            return (
-                ds.Dataset.from_id(ds_id).closest_ancestor_of_type(state_type).state.id
-            )
+            return Dataset.from_id(ds_id).closest_ancestor_of_type(state_type).state.id
 
     state_ids = np.array([_state_or_null(ds_id) for ds_id in unique_ds_ids])
 

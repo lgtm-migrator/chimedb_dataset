@@ -10,8 +10,6 @@ from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
 # Imports
 # =======
 
-import datetime
-
 from .orm import DatasetStateType, DatasetState, Dataset
 
 # Logging

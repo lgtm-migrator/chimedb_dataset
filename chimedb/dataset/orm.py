@@ -1,11 +1,4 @@
 """Table definitions for the comet datasets and states."""
-# === Start Python 2/3 compatibility
-from __future__ import absolute_import, division, print_function, unicode_literals
-from future.builtins import *  # noqa  pylint: disable=W0401, W0614
-from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
-
-# === End Python 2/3 compatibility
-
 from chimedb.core.orm import base_model, JSONDictField
 
 import peewee
@@ -29,7 +22,7 @@ class DatasetStateType(base_model):
     name = peewee.CharField()
 
     def __repr__(self):
-        return "<DatasetStateType: {}>".format(self.name)
+        return f"<DatasetStateType: {self.name}>"
 
 
 class DatasetState(base_model):

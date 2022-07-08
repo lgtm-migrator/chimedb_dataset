@@ -19,6 +19,7 @@ setup(
         "peewee >= 3.10",
         "future",
     ],
+    python_requires=">=3.7",
     author="CHIME collaboration",
     author_email="rick@phas.ubc.ca",
     description="CHIME dataset (comet) ORM",

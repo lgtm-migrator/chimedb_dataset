@@ -1,12 +1,5 @@
 """Functions to read comet datasets and states from the database."""
 
-# === Start Python 2/3 compatibility
-from __future__ import absolute_import, division, print_function, unicode_literals
-from future.builtins import *  # noqa  pylint: disable=W0401, W0614
-from future.builtins.disabled import *  # noqa  pylint: disable=W0401, W0614
-
-# === End Python 2/3 compatibility
-
 # Imports
 # =======
 
@@ -78,7 +71,7 @@ class DatasetStateType(orm.DatasetStateType):
             return _type_cache[name]
 
     def __repr__(self):
-        return "<get.DatasetStateType: {}>".format(self.name)
+        return f"<get.DatasetStateType: {self.name}>"
 
 
 class DatasetState(orm.DatasetState):
@@ -110,7 +103,7 @@ class DatasetState(orm.DatasetState):
         """
         if state_id not in _state_cache.keys():
             try:
-                _logger.debug("Loading state {} from database...".format(state_id))
+                _logger.debug(f"Loading state {state_id} from database...")
                 if load_data:
                     _state_cache[state_id] = DatasetState.get(
                         DatasetState.id == state_id
@@ -120,16 +113,16 @@ class DatasetState(orm.DatasetState):
                         DatasetState.type, DatasetState.time
                     ).get()
             except orm.DatasetState.DoesNotExist:
-                _logger.warning("Could not find state {}.".format(state_id))
+                _logger.warning(f"Could not find state {state_id}.")
                 return None
         return _state_cache[state_id]
 
     def __repr__(self):
         type_ = self.state_type
         if type_ is not None:
-            return "<get.DatasetState[{}]: {}>".format(type_.name, self.id)
+            return f"<get.DatasetState[{type_.name}]: {self.id}>"
         else:
-            return "<get.DatasetState: {}>".format(self.id)
+            return f"<get.DatasetState: {self.id}>"
 
     @property
     def state_type(self):
@@ -194,13 +187,13 @@ class Dataset(orm.Dataset):
         """
         if not isinstance(ds_id, str):
             raise ValidationError(
-                "ds_id is of type {} (expected str)".format(type(ds_id).__name__)
+                f"ds_id is of type {type(ds_id).__name__} (expected str)"
             )
         if ds_id not in _dataset_cache:
             try:
                 _dataset_cache[ds_id] = Dataset.get(Dataset.id == ds_id)
             except orm.Dataset.DoesNotExist:
-                _logger.warning("Could not find dataset {}.".format(ds_id))
+                _logger.warning(f"Could not find dataset {ds_id}.")
                 return None
         return _dataset_cache[ds_id]
 
@@ -229,9 +222,9 @@ class Dataset(orm.Dataset):
 
     def __repr__(self):
         if self._type:
-            return "<get.Dataset[{}]: {}>".format(self._type, self.id)
+            return f"<get.Dataset[{self._type}]: {self.id}>"
         else:
-            return "<get.Dataset: {}>".format(self.id)
+            return f"<get.Dataset: {self.id}>"
 
     def closest_ancestor_of_type(self, type_):
         """
@@ -255,7 +248,7 @@ class Dataset(orm.Dataset):
         if isinstance(type_, str):
             type_ = DatasetStateType.from_name(name=type_)
             if type_ is None:
-                raise NotFoundError("{} is not a known DatasetStateType".format(type_))
+                raise NotFoundError(f"{type_} is not a known DatasetStateType")
         d = self
 
         while d:

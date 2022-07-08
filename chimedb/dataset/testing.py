@@ -30,7 +30,7 @@ class TestChimeDB(unittest.TestCase):
             )
 
         # Tell chimedb where the database connection config is
-        assert os.path.isfile(rcfile), "Could not find {}.".format(rcfile)
+        assert os.path.isfile(rcfile), f"Could not find {rcfile}."
         os.environ["CHIMEDB_TEST_RC"] = rcfile
 
         # Make sure we don't write to the actual chime database

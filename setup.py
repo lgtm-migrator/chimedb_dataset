@@ -1,9 +1,6 @@
 """Tables and tools for CHIME datasets and states."""
 from setuptools import setup
 
-import codecs
-import os
-import re
 import versioneer
 
 

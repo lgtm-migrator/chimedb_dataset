@@ -1,0 +1,56 @@
+name: chimedb_dataset-ci-build
+on:
+  pull_request:
+    branches:
+    - master
+  push:
+    branches:
+    - master
+
+jobs:
+
+  lint-code:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10
+
+    - name: Install black
+      run: pip install black
+
+    - name: Check code with black
+      run: |
+        black --check .
+
+  run-tests:
+
+    strategy:
+      matrix:
+        python-version: [3.7, 3.10]
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install chimedb_dataflags
+      run: |
+        pip install .
+
+    - name: Run tests
+      # Set PYTHONPATH so that relative imports in click script work when pytest imports that
+      run: |
+        touch $CHIMEDB_TEST_SQLITE
+        pytest -sv tests/
+      env:
+        CHIMEDB_TEST_ENABLE: 1
+        CHIMEDB_TEST_SQLITE: test.sql

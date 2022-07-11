@@ -3,7 +3,7 @@
 # Imports
 # =======
 
-import collections
+from collections.abc import Mapping
 import warnings
 
 from . import orm
@@ -290,7 +290,7 @@ def index():
         _type_cache_by_id[t.id] = t
 
 
-class DatasetCache(collections.Mapping):
+class DatasetCache(Mapping):
     """Read-only access to the dataset cache."""
 
     def __init__(self):
